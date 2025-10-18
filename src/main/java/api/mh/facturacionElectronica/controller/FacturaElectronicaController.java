@@ -27,16 +27,19 @@ public class FacturaElectronicaController {
 
 		tokenValido = sessionTokenController.validarToken();
 
-		if (tokenValido) {
-			logger.debug("TOKEN VALIDO");
-			sessionToken = sessionTokenController.getToken();
-			lista = felControlController.listFelControl();
-		} else {
-			logger.debug("TOKEN INVALIDO");
-			sessionTokenController.crearToken();
-			sessionToken = sessionTokenController.getToken();
-			lista = felControlController.listFelControl();
-		}
+//		if (tokenValido) {
+//			logger.debug("TOKEN VALIDO");
+//			sessionToken = sessionTokenController.getToken();
+//			lista = felControlController.listFelControl();
+//		} else {
+//			logger.debug("TOKEN INVALIDO");
+//			sessionTokenController.crearToken();
+//			sessionToken = sessionTokenController.getToken();
+//			lista = felControlController.listFelControl();
+//		}
+		
+		lista = felControlController.listFelControl();
+		sessionToken = null;
 
 		procesarDTES(lista, sessionToken);
 

@@ -42,8 +42,8 @@ public class App {
 		ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
 		exec.scheduleAtFixedRate(procesoFacturacionElectronica, 0, tiempoEjecucion, TimeUnit.SECONDS);
 
-		ScheduledExecutorService exec2 = Executors.newScheduledThreadPool(1);
-		exec2.scheduleAtFixedRate(procesoContigencia, 0, tiempoEjecucionContingencia, TimeUnit.MINUTES);
+		//ScheduledExecutorService exec2 = Executors.newScheduledThreadPool(1);
+		//exec2.scheduleAtFixedRate(procesoContigencia, 0, tiempoEjecucionContingencia, TimeUnit.MINUTES);
 	}
 
 	static Runnable procesoFacturacionElectronica = new Runnable() {
