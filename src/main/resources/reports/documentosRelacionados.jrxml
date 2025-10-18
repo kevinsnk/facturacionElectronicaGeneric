@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="documentosRelacionados" pageWidth="540" pageHeight="720" columnWidth="540" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c2fa23b1-2a76-4d8b-90e9-e4cd4a4335de">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="multitel.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="docEntry" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT  TOP 1 CASE WHEN T0.U_FacSerie IS NULL THEN '' 
+ELSE(SELECT K0.Name FROM [@TIPOSDOCUMENTO] K0 
+WHERE K0.code = (SELECT J0.U_FacSerie FROM OINV J0 WHERE J0.DocNum = T1.BaseRef AND DocSubType!='DN')) END tipoDoc, 
+ISNULL((SELECT U_E_CODGENE FROM OINV K0 WHERE K0.DocNum = T1.BaseRef), (SELECT K0.U_num_doc FROM OINV K0 WHERE K0.DocNum = T1.BaseRef)) docNum,   
+ISNULL(CAST((SELECT CAST(CAST(K0.U_E_FECHORA AS VARCHAR) AS DATE) FROM OINV K0 WHERE K0.DocNum = T1.BaseRef) AS VARCHAR),
+CAST((SELECT CAST(CAST(K0.docDate AS VARCHAR) AS DATE) FROM OINV K0 WHERE K0.DocNum = T1.BaseRef) AS VARCHAR)) fechaEmision,   
+CASE WHEN (SELECT U_E_CODGENE FROM OINV K0 WHERE K0.DocNum = T1.BaseRef) IS NULL THEN 1 ELSE 2 END tipoGeneracion 
+FROM ORIN T0 JOIN RIN1 T1 ON T0.DocEntry = T1.DocEntry WHERE T0.docEntry =  $P{docEntry}]]>
+	</queryString>
+	<field name="tipoDoc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipoDoc"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipoDoc"/>
+	</field>
+	<field name="docNum" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="docNum"/>
+		<property name="com.jaspersoft.studio.field.label" value="docNum"/>
+	</field>
+	<field name="fechaEmision" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fechaEmision"/>
+		<property name="com.jaspersoft.studio.field.label" value="fechaEmision"/>
+	</field>
+	<field name="tipoGeneracion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="tipoGeneracion"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipoGeneracion"/>
+	</field>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="31" width="120" height="30" uuid="3341a006-3b5d-4bf0-b4b1-dcd4d9cf6176">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c534c396-ec84-40b2-bd9b-ecaecbc0a3a7"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="30" width="100" height="30" uuid="b00063b1-8605-4663-a6b8-025247bcf85f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b438d8e1-4e1a-4986-b45d-cc8077f04be3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de gestión de documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="31" width="210" height="30" uuid="2e6f5971-db89-4e9a-b2f5-8ec6369d954e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94cb24b4-f761-46cf-92bc-38541273240d"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="30" width="110" height="30" uuid="269d13cc-4bbf-4171-a1c1-95d07012682f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8e3654eb-4407-4f6f-aff8-c6923092b4dd"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha del documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="540" height="30" uuid="99dab24d-1ff4-4f5a-bebd-328d6948c48b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c534c396-ec84-40b2-bd9b-ecaecbc0a3a7"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documentos relacionados]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="120" height="30" uuid="7c16046b-4aa8-4cd4-995c-6fbe9aea0aa5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c534c396-ec84-40b2-bd9b-ecaecbc0a3a7"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoDoc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="100" height="30" uuid="56f3e2c3-c04c-454a-b02c-9216824e2048">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b438d8e1-4e1a-4986-b45d-cc8077f04be3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoGeneracion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="210" height="30" uuid="2ff3ff52-634f-453f-be45-acf2892f9a19">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94cb24b4-f761-46cf-92bc-38541273240d"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{docNum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="110" height="30" uuid="9505db37-fcc2-4d49-b7b0-9870e48c9f1d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8e3654eb-4407-4f6f-aff8-c6923092b4dd"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineColor="#54544A"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#54544A"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaEmision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
