@@ -38,7 +38,7 @@ public class ContingenciaController extends AbstractController {
 	public final Properties properties = new Properties();
 
 	@Override
-	public void procesarDTE(Object entity, Object token, Boolean contingencia) {
+	public ContingenciaResponse procesarDTE(Object entity, Object token, Boolean contingencia) {
 		FeContingencia feContingencia = (FeContingencia) entity;
 		SessionToken sessionToken = (SessionToken) token;
 		FirmaContingenciaRequest firmaContingenciaRequest = new FirmaContingenciaRequest();
@@ -74,8 +74,11 @@ public class ContingenciaController extends AbstractController {
 			guardarRespuestaContingencia(feContingencia, recepcionDTEResponse, jsonEntrada);
 		} catch (Exception e) {
 			logger.error("Error en metodo procesarDTE");
+			recepcionDTEResponse = null;
 			e.printStackTrace();
 		}
+		
+		return recepcionDTEResponse;
 
 	}
 

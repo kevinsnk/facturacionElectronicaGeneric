@@ -43,7 +43,7 @@ public class NrController extends AbstractController {
 	public final Properties properties = new Properties();
 
 	@Override
-	public void procesarDTE(Object entity, Object token, Boolean contingencia) {
+	public RecepcionDTEResponse procesarDTE(Object entity, Object token, Boolean contingencia) {
 		FelControl felControl = (FelControl) entity;
 		SessionToken sessionToken = (SessionToken) token;
 		FirmardocumentoNRRequest firmardocumentoRequest = new FirmardocumentoNRRequest();
@@ -93,8 +93,11 @@ public class NrController extends AbstractController {
 			editarEnvioEmail(felControl, envioEmail);
 		} catch (Exception e) {
 			logger.error("Error en metodo procesarDTE");
+			recepcionDTEResponse = null;
 			e.printStackTrace();
 		}
+		
+		return recepcionDTEResponse;
 	}
 
 	@SuppressWarnings("unchecked")

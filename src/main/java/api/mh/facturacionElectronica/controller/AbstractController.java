@@ -22,7 +22,7 @@ public abstract class AbstractController {
 	
 	private static final Logger logger = LogManager.getLogger(AbstractController.class);
 
-	public abstract void procesarDTE(Object entity, Object token, Boolean contingencia);
+	public abstract Object procesarDTE(Object entity, Object token, Boolean contingencia);
 
 	public abstract <T> T obtenerDTE(Object entity, Boolean contingencia);
 

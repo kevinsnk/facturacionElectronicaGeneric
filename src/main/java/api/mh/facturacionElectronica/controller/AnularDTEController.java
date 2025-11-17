@@ -38,7 +38,7 @@ public class AnularDTEController extends AbstractController {
 	public final Properties properties = new Properties();
 
 	@Override
-	public void procesarDTE(Object entity, Object token, Boolean contingencia) {
+	public AnulacionDTEResponse procesarDTE(Object entity, Object token, Boolean contingencia) {
 		FelControl felControl = (FelControl) entity;
 		SessionToken sessionToken = (SessionToken) token;
 		AnulacionDTERequest anulacionDTERequest = new AnulacionDTERequest();
@@ -92,6 +92,8 @@ public class AnularDTEController extends AbstractController {
 			logger.warn("Error en metodo procesarDTE");
 			e.printStackTrace();
 		}
+		
+		return anulacionDTEResponse;
 	}
 
 	@SuppressWarnings("unchecked")

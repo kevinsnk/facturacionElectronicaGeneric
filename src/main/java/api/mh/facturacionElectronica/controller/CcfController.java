@@ -248,7 +248,7 @@ public class CcfController extends AbstractController {
 	}
 
 	@Override
-	public void procesarDTE(Object entity, Object token, Boolean contingencia) {
+	public RecepcionDTEResponse procesarDTE(Object entity, Object token, Boolean contingencia) {
 		FelControl felControl = (FelControl) entity;
 		SessionToken sessionToken = (SessionToken) token;
 		FirmardocumentoCCFRequest firmardocumentoCCFRequest = new FirmardocumentoCCFRequest();
@@ -299,8 +299,11 @@ public class CcfController extends AbstractController {
 			
 		} catch (Exception e) {
 			logger.error("Error en metodo procesarDTE");
+			recepcionDTEResponse = null;
 			e.printStackTrace();
 		}
+		
+		return recepcionDTEResponse;
 	}
 
 	@SuppressWarnings("unchecked")

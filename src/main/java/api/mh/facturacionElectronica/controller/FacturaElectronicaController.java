@@ -14,7 +14,7 @@ import api.mh.facturacionElectronica.jdbc.FeContingenciaJDBC;
 public class FacturaElectronicaController {
 
 	private static final Logger logger = LogManager.getLogger(FacturaElectronicaController.class);
-	
+
 	public void procesoFel() {
 		SessionTokenController sessionTokenController = new SessionTokenController();
 		FelControlController felControlController = new FelControlController();
@@ -37,9 +37,8 @@ public class FacturaElectronicaController {
 //			sessionToken = sessionTokenController.getToken();
 //			lista = felControlController.listFelControl();
 //		}
-		
+
 		lista = felControlController.listFelControl();
-		sessionToken = null;
 
 		procesarDTES(lista, sessionToken);
 
@@ -118,13 +117,13 @@ public class FacturaElectronicaController {
 			}
 		}
 	}
-	
+
 	public void procesarContingenciasPendientes() {
 		SessionTokenController sessionTokenController = new SessionTokenController();
 		ContingenciaController contingenciaController = new ContingenciaController();
-		
+
 		FeContingenciaJDBC feContingenciaJDBC = new FeContingenciaJDBC();
-		
+
 		SessionToken sessionToken = new SessionToken();
 		List<FeContingencia> lista = new ArrayList<FeContingencia>();
 		Boolean tokenValido = false;
@@ -135,14 +134,94 @@ public class FacturaElectronicaController {
 			logger.debug("TOKEN VALIDO");
 			sessionToken = sessionTokenController.getToken();
 			lista = feContingenciaJDBC.getContingenciasPendientes();
-		} 
-		
-		for(FeContingencia feContingencia : lista) {
+		}
+
+		for (FeContingencia feContingencia : lista) {
 			contingenciaController.procesarDTE(feContingencia, sessionToken, false);
 		}
-		
+
 		logger.debug("======================================");
 		logger.debug("TERMINA PROCESAMIENTO DE CONTINGENCIAS");
 		logger.debug("======================================");
+	}
+
+	public Object procesarDTE(FelControl felControl) {
+		Boolean contingencia = false;
+		SessionToken sessionToken = new SessionToken();
+		Boolean tokenValido = false;
+		SessionTokenController sessionTokenController = new SessionTokenController();
+
+		logger.debug("ENTRO AL PROCESO procesarDTE");
+
+		tokenValido = sessionTokenController.validarToken();
+
+		if (tokenValido) {
+			logger.debug("TOKEN VALIDO");
+			sessionToken = sessionTokenController.getToken();
+		} else {
+			logger.debug("TOKEN INVALIDO");
+			sessionTokenController.crearToken();
+			sessionToken = sessionTokenController.getToken();
+		}
+		
+		if (felControl.getuContingencia() == null) {
+			contingencia = false;
+		} else if (felControl.getuContingencia().equals("I")) {
+			contingencia = true;
+		}
+		
+		switch (felControl.getuTipo()) {
+		case "FAC":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Factura consumidor final");
+			logger.info("------------------------------------------");
+			FcController fcController = new FcController();
+			return fcController.procesarDTE(felControl, sessionToken, contingencia);
+		case "CCF":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Crédito fiscal");
+			logger.info("------------------------------------------");
+			CcfController ccfController = new CcfController();
+			return ccfController.procesarDTE(felControl, sessionToken, contingencia);
+		case "FAE":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Factura de exportación");
+			logger.info("------------------------------------------");
+			FexController fexController = new FexController();
+			return fexController.procesarDTE(felControl, sessionToken, contingencia);
+		case "NC":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Nota de Crédito");
+			logger.info("------------------------------------------");
+			NcController ncController = new NcController();
+			return ncController.procesarDTE(felControl, sessionToken, contingencia);
+		case "ND":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Nota de Débito");
+			logger.info("------------------------------------------");
+			NdController ndController = new NdController();
+			return ndController.procesarDTE(felControl, sessionToken, contingencia);
+		case "NRE":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Nota de Remisión");
+			logger.info("------------------------------------------");
+			NrController nrController = new NrController();
+			return nrController.procesarDTE(felControl, sessionToken, contingencia);
+		case "FSE":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Factura de Sujeto Excluido");
+			logger.info("------------------------------------------");
+			FseController fseController = new FseController();
+			return fseController.procesarDTE(felControl, sessionToken, contingencia);
+		case "ANL":
+			logger.info("------------------------------------------");
+			logger.info("Se procesa Anulación de documento");
+			logger.info("------------------------------------------");
+			AnularDTEController anularDTEController = new AnularDTEController();
+			return anularDTEController.procesarDTE(felControl, sessionToken, contingencia);
+		default:
+			return null;
+		}
+		
 	}
 }
